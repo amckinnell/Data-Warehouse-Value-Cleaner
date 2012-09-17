@@ -7,14 +7,16 @@ import org.junit.Test;
 
 public class DataWarehouseValueCleanerTest {
 
+    final DataWarehouseValueCleaner sut = new DataWarehouseValueCleaner();
+
     @Test
     public void removeLeadingGreaterThanCharacter() {
-        assertThat(DataWarehouseValueCleaner.removeOddCharacters(">some_value"), is("some_value"));
+        assertThat(sut.removeOddCharacters(">some_value"), is("some_value"));
     }
 
     @Test
     public void removeLeadingTildeCharacter() {
-        assertThat(DataWarehouseValueCleaner.removeOddCharacters("~some_value"), is("some_value"));
+        assertThat(sut.removeOddCharacters("~some_value"), is("some_value"));
     }
 
 }

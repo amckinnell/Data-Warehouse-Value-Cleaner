@@ -56,7 +56,7 @@ public class DataWarehouseValueCleaner {
         return value;
     }
 
-    public static String removeOddCharacters(String value) {
+    public String removeOddCharacters(String value) {
         value = value.replaceAll("%", "");
         value = value.replaceAll("<", "");
         value = value.replaceAll(">", "");

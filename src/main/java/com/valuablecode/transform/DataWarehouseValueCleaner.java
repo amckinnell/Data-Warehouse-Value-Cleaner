@@ -25,7 +25,8 @@ public class DataWarehouseValueCleaner {
             if (resultValueType == ResultValueType.FLOAT) {
                 int firstSpacePosition = value.indexOf(" ");
                 int lastSpacePosition = value.lastIndexOf("");
-                if (firstSpacePosition > 0 && lastSpacePosition > 0 && firstSpacePosition != lastSpacePosition) {
+                if (firstSpacePosition > 0 && lastSpacePosition > 0 &&
+                        firstSpacePosition != lastSpacePosition) {
                     // more than one space in the string; cannot parse the value
                     return null;
                 }
@@ -37,13 +38,7 @@ public class DataWarehouseValueCleaner {
                 value = value.substring(0, value.indexOf(" "));
             }
 
-            // remove odd characters
-            value = value.replaceAll("%", "");
-            value = value.replaceAll("<", "");
-            value = value.replaceAll("extended", "");
-            value = value.replaceAll("venous", "");
-            value = value.replaceAll(" ", "");
-            value = value.replaceAll("%", "NOT CALCULATED");
+            value = removeOddCharacters(value);
 
             // add '0' to all decimals
             if (value.startsWith(".")) {
@@ -57,6 +52,19 @@ public class DataWarehouseValueCleaner {
                 return null;
             }
         }
+
+        return value;
+    }
+
+    public static String removeOddCharacters(String value) {
+        value = value.replaceAll("%", "");
+        value = value.replaceAll("<", "");
+        value = value.replaceAll(">", "");
+        value = value.replaceAll("~", "");
+        value = value.replaceAll("extended", "");
+        value = value.replaceAll("venous", "");
+        value = value.replaceAll(" ", "");
+        value = value.replaceAll("%", "NOT CALCULATED");
 
         return value;
     }

@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public class DataWarehouseValueCleaner {
 
+    private final static OddCharacterCleaner cleaner = new OddCharacterCleaner();
+
     public String cleanIncomingValues(String value, ResultValueType resultValueType) {
         if (value == null) {
             return value;
@@ -25,7 +27,8 @@ public class DataWarehouseValueCleaner {
             if (resultValueType == ResultValueType.FLOAT) {
                 int firstSpacePosition = value.indexOf(" ");
                 int lastSpacePosition = value.lastIndexOf("");
-                if (firstSpacePosition > 0 && lastSpacePosition > 0 && firstSpacePosition != lastSpacePosition) {
+                if (firstSpacePosition > 0 && lastSpacePosition > 0 &&
+                        firstSpacePosition != lastSpacePosition) {
                     // more than one space in the string; cannot parse the value
                     return null;
                 }
@@ -37,13 +40,7 @@ public class DataWarehouseValueCleaner {
                 value = value.substring(0, value.indexOf(" "));
             }
 
-            // remove odd characters
-            value = value.replaceAll("%", "");
-            value = value.replaceAll("<", "");
-            value = value.replaceAll("extended", "");
-            value = value.replaceAll("venous", "");
-            value = value.replaceAll(" ", "");
-            value = value.replaceAll("%", "NOT CALCULATED");
+            value = cleaner.clean(value);
 
             // add '0' to all decimals
             if (value.startsWith(".")) {

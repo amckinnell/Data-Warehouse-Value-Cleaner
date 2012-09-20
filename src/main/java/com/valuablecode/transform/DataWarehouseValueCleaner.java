@@ -5,9 +5,7 @@ import java.util.Arrays;
 public class DataWarehouseValueCleaner {
 
     public String cleanIncomingValues(String value, ResultValueType resultValueType) {
-        if (value == null) {
-            return value;
-        }
+        if (value == null) return value;
 
         if (resultValueType == ResultValueType.FLOAT || resultValueType == ResultValueType.RANGE
                 || resultValueType == ResultValueType.DATE) {

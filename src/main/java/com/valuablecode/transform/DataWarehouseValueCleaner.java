@@ -1,62 +1,33 @@
 package com.valuablecode.transform;
 
-import java.util.Arrays;
 
 public class DataWarehouseValueCleaner {
+    
+    private final IgnorableValuePolicy ignorableValuePolicy = new IgnorableValuePolicy();
+    private final ValueCleaningPolicy valueCleaningPolicy = new ValueCleaningPolicy();
 
     public String cleanIncomingValues(String value, ResultValueType resultValueType) {
         if (value == null) return value;
+        
+        switch (resultValueType) {
+        case COMPOUND:
+            return new CompoundValueCleaner().clean(value);
+            
+        case DATE:
+            return new DateValueCleaner(ignorableValuePolicy, valueCleaningPolicy).clean(value);
 
-        if (resultValueType == ResultValueType.FLOAT || resultValueType == ResultValueType.RANGE
-                || resultValueType == ResultValueType.DATE) {
+        case FLOAT:
+            return new FloatValueCleaner(ignorableValuePolicy, valueCleaningPolicy).clean(value);
 
-            String[] ignoreValues = { "UNABLE TO CALCULATE", "NOT CALCULATED", "unable to calculate",
-                    "unable to perform", "uanble to calculate", "UANBLE TO CALCULATE", "a", "A" };
-            if (Arrays.asList(ignoreValues).contains(value)) {
-                return null;
-            }
-
-            // remove spaces from the start and end of the string
-            value = value.trim();
-
-            // check if there are >1 space remaining in the string for a float
-            if (resultValueType == ResultValueType.FLOAT) {
-                int firstSpacePosition = value.indexOf(" ");
-                int lastSpacePosition = value.lastIndexOf("");
-                if (firstSpacePosition > 0 && lastSpacePosition > 0 && firstSpacePosition != lastSpacePosition) {
-                    // more than one space in the string; cannot parse the value
-                    return null;
-                }
-            }
-
-            // remove anything found after a space - e.g. "120/80 REG" becomes "120/80
-            int spacePosition = value.indexOf(" ");
-            if (spacePosition > 0) {
-                value = value.substring(0, value.indexOf(" "));
-            }
-
-            // remove odd characters
-            value = value.replaceAll("%", "");
-            value = value.replaceAll("<", "");
-            value = value.replaceAll("extended", "");
-            value = value.replaceAll("venous", "");
-            value = value.replaceAll(" ", "");
-            value = value.replaceAll("%", "NOT CALCULATED");
-
-            // add '0' to all decimals
-            if (value.startsWith(".")) {
-                value = "0" + value;
-            }
+        case RANGE:
+            return new RangeValueCleaner(ignorableValuePolicy, valueCleaningPolicy).clean(value);
+        
+        case TEXT:
+            return new TextValueCleaner().clean(value);
+            
+        default:
+            return null;
         }
-
-        // Added for float results with these text strings - we want to just drop the result
-        if (resultValueType == ResultValueType.FLOAT) {
-            if (value.equals("NA") || value.equals("N/A")) {
-                return null;
-            }
-        }
-
-        return value;
     }
 
 }

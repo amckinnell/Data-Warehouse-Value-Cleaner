@@ -9,25 +9,30 @@ public class DataWarehouseValueCleaner {
     public String cleanIncomingValues(String value, ResultValueType resultValueType) {
         if (value == null) return value;
         
+        return asCleaner(resultValueType).clean(value);
+    }
+    
+    private ValueCleaner asCleaner(ResultValueType resultValueType) {
         switch (resultValueType) {
         case COMPOUND:
-            return new CompoundValueCleaner().clean(value);
+            return new CompoundValueCleaner();
             
         case DATE:
-            return new DateValueCleaner(ignorableValuePolicy, valueCleaningPolicy).clean(value);
+            return new DateValueCleaner(ignorableValuePolicy, valueCleaningPolicy);
 
         case FLOAT:
-            return new FloatValueCleaner(ignorableValuePolicy, valueCleaningPolicy).clean(value);
+            return new FloatValueCleaner(ignorableValuePolicy, valueCleaningPolicy);
 
         case RANGE:
-            return new RangeValueCleaner(ignorableValuePolicy, valueCleaningPolicy).clean(value);
+            return new RangeValueCleaner(ignorableValuePolicy, valueCleaningPolicy);
         
         case TEXT:
-            return new TextValueCleaner().clean(value);
+            return new TextValueCleaner();
             
         default:
             return null;
         }
+
     }
 
 }

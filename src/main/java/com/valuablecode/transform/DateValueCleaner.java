@@ -1,6 +1,6 @@
 package com.valuablecode.transform;
 
-public class DateValueCleaner {
+public class DateValueCleaner implements ValueCleaner {
 
     private final IgnorableValuePolicy ignorableValuePolicy;
     private final ValueCleaningPolicy valueCleaningPolicy;

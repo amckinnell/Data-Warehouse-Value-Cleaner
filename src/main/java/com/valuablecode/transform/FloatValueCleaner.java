@@ -1,6 +1,6 @@
 package com.valuablecode.transform;
 
-public class FloatValueCleaner {
+public class FloatValueCleaner implements ValueCleaner {
 
     private final IgnorableValuePolicy ignorableValuePolicy;
     private final ValueCleaningPolicy valueCleaningPolicy;

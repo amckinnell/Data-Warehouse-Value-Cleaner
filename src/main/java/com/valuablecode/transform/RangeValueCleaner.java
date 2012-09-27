@@ -1,6 +1,6 @@
 package com.valuablecode.transform;
 
-public class RangeValueCleaner {
+public class RangeValueCleaner implements ValueCleaner {
 
     private final IgnorableValuePolicy ignorableValuePolicy;
     private final ValueCleaningPolicy valueCleaningPolicy;

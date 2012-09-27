@@ -32,7 +32,6 @@ public class DataWarehouseValueCleaner {
         default:
             return null;
         }
-
     }
 
 }

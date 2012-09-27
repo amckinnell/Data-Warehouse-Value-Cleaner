@@ -73,8 +73,8 @@ public class DataWarehouseValueCleanerCharacterisationTest {
         });
     }
 
-    @Test public void
-    cleans_as_expected() {
+    @Test
+    public void cleans_as_expected() {
         assertThat(reason, sut.cleanIncomingValues(dataWarehouseValue, resultValueType), equalTo(expected));
     }
 

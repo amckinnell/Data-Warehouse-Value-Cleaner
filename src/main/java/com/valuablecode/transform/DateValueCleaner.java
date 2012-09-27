@@ -16,7 +16,6 @@ public class DateValueCleaner implements ValueCleaner {
             return null;
         }
 
-        // remove spaces from the start and end of the string
         value = value.trim();
 
         // remove anything found after a space - e.g. "120/80 REG" becomes "120/80

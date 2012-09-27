@@ -16,7 +16,6 @@ public class FloatValueCleaner implements ValueCleaner {
             return null;
         }
 
-        // remove spaces from the start and end of the string
         value = value.trim();
 
         // check if there are >1 space remaining in the string for a float

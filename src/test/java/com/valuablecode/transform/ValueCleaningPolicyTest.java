@@ -33,6 +33,9 @@ public class ValueCleaningPolicyTest {
                 { "", " extended" }, 
                 { "", "venous" },
 
+                { "120/80", "120/80 REG" },
+                { "16.8", ">16.8  APPROX" },
+
                 { null, null }, 
                 });
     }

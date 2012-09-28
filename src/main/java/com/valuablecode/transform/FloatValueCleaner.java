@@ -27,12 +27,6 @@ public class FloatValueCleaner implements ValueCleaner {
             return null;
         }
 
-        // remove anything found after a space - e.g. "120/80 REG" becomes "120/80
-        int spacePosition = value.indexOf(" ");
-        if (spacePosition > 0) {
-            value = value.substring(0, value.indexOf(" "));
-        }
-        
         value = valueCleaningPolicy.clean(value);
 
         // add '0' to all decimals
@@ -47,5 +41,4 @@ public class FloatValueCleaner implements ValueCleaner {
 
         return value;
     }
-
 }

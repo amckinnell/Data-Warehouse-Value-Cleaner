@@ -1,6 +1,5 @@
 package com.valuablecode.transform;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -10,18 +9,21 @@ import java.util.regex.Pattern;
 public class ValueCleaningPolicy {
 
     private static final Pattern cleanableStringRegExp = Pattern.compile(" |%|<|>|~|extended|venous");
-    private static final Pattern leadingTextRegExp = Pattern.compile("(\\S)+\\s");
 
     public String clean(String dataWarehouseValue) {
         if (dataWarehouseValue == null) return null;
         
-        return removeCleanableStrings(keepOnlyLeadingText(dataWarehouseValue));
+        return removeCleanableStrings(removeTrailingText(dataWarehouseValue));
     }
 
-    private String keepOnlyLeadingText(String dataWarehouseValue) {
-        Matcher matcher = leadingTextRegExp.matcher(dataWarehouseValue);
+    private String removeTrailingText(String value) {
+        int spacePosition = value.indexOf(" ");
         
-        return matcher.find() ? matcher.group() : dataWarehouseValue;
+        if (spacePosition > 0) {
+            value = value.substring(0, value.indexOf(" "));
+        }
+        
+        return value;
     }
 
     private String removeCleanableStrings(String dataWarehouseValue) {

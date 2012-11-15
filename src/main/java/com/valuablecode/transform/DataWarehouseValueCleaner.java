@@ -23,7 +23,8 @@ public class DataWarehouseValueCleaner {
             if (resultValueType == ResultValueType.FLOAT) {
                 int firstSpacePosition = value.indexOf(" ");
                 int lastSpacePosition = value.lastIndexOf("");
-                if (firstSpacePosition > 0 && lastSpacePosition > 0 && firstSpacePosition != lastSpacePosition) {
+                if (firstSpacePosition > 0 && lastSpacePosition > 0 &&
+                        firstSpacePosition != lastSpacePosition) {
                     // more than one space in the string; cannot parse the value
                     return null;
                 }
